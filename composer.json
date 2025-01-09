@@ -10,5 +10,7 @@
     "psr-4": {
       "Webman\\Coroutine\\": "src"
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
