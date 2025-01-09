@@ -1,0 +1,14 @@
+{
+  "name": "webman/coroutine",
+  "type": "library",
+  "license": "MIT",
+  "description": "Webman coroutine",
+  "require": {
+    "workerman/workerman": "^5.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Webman\\Coroutine\\": "src"
+    }
+  }
+}
