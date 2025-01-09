@@ -153,7 +153,6 @@ class Pool implements PoolInterface
         if (!$connection) {
             throw new RuntimeException("Connection pool exhausted and unable to acquire a connection within wait timeout($this->waitTimeout seconds).");
         }
-        $this->lastUsedTimes[$connection] = time();
         return $connection;
     }
 
@@ -219,6 +218,7 @@ class Pool implements PoolInterface
             $connection = call_user_func($this->connectionCreateHandler);
             $this->checkValidateConnection($connection);
             $this->channel->push($connection);
+            $this->lastUsedTimes[$connection] = time();
         } catch (Throwable $throwable) {
             --$this->currentConnections;
             throw $throwable;
