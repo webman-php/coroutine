@@ -219,7 +219,7 @@ class Pool implements PoolInterface
             $connection = call_user_func($this->connectionCreateHandler);
             $this->checkValidateConnection($connection);
             $this->channel->push($connection);
-            $this->lastUsedTimes[$connection] = time();
+            $this->lastUsedTimes[$connection] = $this->lastHeartbeatTimes[$connection] = time();
         } catch (Throwable $throwable) {
             --$this->currentConnections;
             throw $throwable;
@@ -228,7 +228,7 @@ class Pool implements PoolInterface
     }
 
     /**
-     * Close connection.
+     * Close the connection and remove the connection from the connection pool.
      *
      * @param mixed $connection
      * @return void
@@ -277,7 +277,7 @@ class Pool implements PoolInterface
                 $this->closeConnection($connection);
                 continue;
             }
-            $lastHeartbeatTime = $this->lastHeartbeatTimes[$connection] ?? 0;
+            $lastHeartbeatTime = $this->lastHeartbeatTimes[$connection];
             if ($this->connectionHeartbeatHandler && $time - $lastHeartbeatTime >= $this->heartbeatInterval) {
                 try {
                     call_user_func($this->connectionHeartbeatHandler, $connection);
