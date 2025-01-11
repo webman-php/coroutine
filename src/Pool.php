@@ -11,6 +11,7 @@ use support\Log;
 use Throwable;
 use WeakMap;
 use Workerman\Timer;
+use Workerman\Worker;
 
 /**
  * Class Pool
@@ -96,7 +97,7 @@ class Pool implements PoolInterface
         $this->lastUsedTimes = new WeakMap();
         $this->lastHeartbeatTimes = new WeakMap();
 
-        Timer::repeat(1, function () {
+        Worker::getStatus() === Worker::STATUS_RUNNING && Timer::repeat(1, function () {
             $this->checkConnections();
         });
     }
@@ -254,7 +255,7 @@ class Pool implements PoolInterface
             $this->log($throwable);
         }
     }
-    
+
 
     /**
      * Cleanup idle connections.
