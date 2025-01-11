@@ -17,18 +17,17 @@ interface PoolInterface
     /**
      * Put a connection back to the pool.
      *
-     * @param mixed $connection
+     * @param object $connection
      * @return void
      */
-    public function put(mixed $connection): void;
+    public function put(object $connection): void;
 
     /**
      * Create a connection.
      *
-     * @return mixed
+     * @return object
      */
-    public function createConnection(): mixed;
-
+    public function createConnection(): object;
 
     /**
      * Close the connection and remove the connection from the connection pool.
@@ -36,6 +35,6 @@ interface PoolInterface
      * @param mixed $connection
      * @return void
      */
-    public function closeConnection(mixed $connection): void;
+    public function closeConnection(object $connection): void;
 
 }

@@ -140,10 +140,10 @@ class Pool implements PoolInterface
     /**
      * Get connection.
      *
-     * @return mixed
+     * @return object
      * @throws Throwable
      */
-    public function get(): mixed
+    public function get(): object
     {
         $num = $this->channel->length();
         if ($num === 0 && $this->currentConnections < $this->maxConnections) {
@@ -160,14 +160,12 @@ class Pool implements PoolInterface
     /**
      * Put connection to pool.
      *
-     * @param $connection
+     * @param object $connection
      * @return void
      * @throws Throwable
      */
-    public function put($connection): void
+    public function put(object $connection): void
     {
-        $this->checkValidateConnection($connection);
-
         // This connection does not belong to the connection pool.
         // It may have been closed by $this->closeConnection($connection).
         if (!isset($this->lastUsedTimes[$connection])) {
@@ -212,7 +210,7 @@ class Pool implements PoolInterface
      * @return mixed
      * @throws Throwable
      */
-    public function createConnection(): mixed
+    public function createConnection(): object
     {
         try {
             ++$this->currentConnections;
